@@ -3,6 +3,12 @@ from agent import Agent
 
 class AdaptiveTFT(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        An adaption rate r is used to compute a continuous variable 'world' according to history moves of the opponent.
+        world = world + r * (1 - world) if opponent cooperates
+        world = world + r * (0 - world) if opponent defects
+        Play cooperate if world >= 0.5 else defects
+        """
         super().__init__(agent_id, strategy)
         self.r = 0.2
         self.world = {}

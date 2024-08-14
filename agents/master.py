@@ -3,6 +3,10 @@ from agent import Agent
 
 class Master(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Has a secret handshake signal. The master will tell their opponent this agent is a master.
+        If opponent behaves like another master, cooperate. Otherwise, defect against everyone else including the slaves.
+        """
         super().__init__(agent_id, strategy)
         self.masters = set()
         self.others  = set()

@@ -3,6 +3,9 @@ from agent import Agent
 
 class Grim(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Cooperates until opponent defects, then defect forever
+        """
         super().__init__(agent_id, strategy)
         self.defected = set()
 

@@ -3,6 +3,9 @@ from agent import Agent
 
 class TitForTat(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Starts off cooperating, then copy opponent's last move
+        """
         super().__init__(agent_id, strategy)
         self.history = {}
 

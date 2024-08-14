@@ -2,6 +2,9 @@ from agent import Agent
 
 class TFTT(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Starts off cooperating, then defect if opponent defected twice in a row
+        """
         super().__init__(agent_id, strategy)
         self.history = {}
     

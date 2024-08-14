@@ -6,6 +6,9 @@ import math
 
 class QLearner(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Reinforcement Q-Learning algorithm that allows the agent to learn and adapt their strategy against opponents
+        """
         super().__init__(agent_id, strategy)
         self.seen = {}
 

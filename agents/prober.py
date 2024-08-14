@@ -3,6 +3,9 @@ from agent import Agent
 
 class Prober(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Starts off with D,C,C. If opponent cooperates both 2nd and 3rd round, then play Always Defect, otherwise play TFT
+        """
         super().__init__(agent_id, strategy)
         self.sequence = (1, 0, 0)
         self.start_history = {}

@@ -2,8 +2,12 @@ from agent import Agent
 
 class HandShake(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Has a secret handshake signal. If opponent does the exact same moves, identify them as a teammate.
+        Cooperate with all teammates, defect against everyone else.
+        """
         super().__init__(agent_id, strategy)
-        self.handshake = [0, 0, 1, 0]
+        self.handshake = [0, 1, 0, 0]
         self.history_count = {}
         self.team = set()
         self.enemy = set()
@@ -34,6 +38,6 @@ class HandShake(Agent):
         else:
             self.history_count[agent_id] += 1
         
-        if self.history_count[agent_id] == 4:
+        if self.history_count[agent_id] == len(self.handshake):
             self.team.add(agent_id)
 

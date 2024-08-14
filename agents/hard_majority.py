@@ -3,6 +3,9 @@ from agent import Agent
 
 class HardMajority(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Starts off defect, then cooperate if opponent's cooperate count > opponent's defect count
+        """
         super().__init__(agent_id, strategy)
         self.defect_count = {}
 

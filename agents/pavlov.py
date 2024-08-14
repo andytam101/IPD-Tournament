@@ -3,6 +3,9 @@ from agent import Agent
 
 class Pavlov(Agent):
     def __init__(self, agent_id, strategy) -> None:
+        """
+        Starts off cooperating, if opponent defects, switch choice, otherwise keep choosing the same action
+        """
         super().__init__(agent_id, strategy)
         self.choice = {}
 
