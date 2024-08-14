@@ -79,7 +79,8 @@ class Game:
         for strategy in strategy_acc:
             strategy_info[strategy] = [
                 round(strategy_acc[strategy][0] / strategy_acc[strategy][3], 3), 
-                round(strategy_acc[strategy][2] / strategy_acc[strategy][3], 3)
+                round(strategy_acc[strategy][2] / strategy_acc[strategy][3], 3),
+                strategy_acc[strategy][0]
             ]
 
         strategies = list(strategy_info.keys())
@@ -91,7 +92,8 @@ class Game:
             result.append({
                 "strategy": s,
                 "score per agent": strategy_info[s][0],
-                "average score per agent": strategy_info[s][1]
+                "average score per agent": strategy_info[s][1],
+                "total score": strategy_info[s][2]
             })
 
         return result
