@@ -48,7 +48,7 @@ class QLearner(Agent):
             self.new_agent(agent_id)
 
         # if random.random() > self.epsilon[agent_id]:
-        if self.seen[agent_id] < 4 or random.random() > self.epsilon(agent_id):
+        if self.seen[agent_id] >= 4 and random.random() > self.epsilon(agent_id):
             # exploitation
             state = self.get_state(agent_id)
             result = np.argmax(self.q_values[agent_id][state])
