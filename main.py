@@ -3,23 +3,23 @@ from factories import *
 
 
 STRATEGIES = {
-    buildAlwaysCoop: 5, 
-    buildAlwaysDefect: 5, 
-    buildRandom: 5,
-    buildTitForTat: 5,
-    buildSuspiciousTitForTat: 5,
-    buildTFTT: 5,
-    buildTTFT: 5,
-    buildGrim: 5,
-    buildProber: 5,
-    buildSoftMajority: 5,
-    buildHardMajority: 5,
-    buildHandShake: 5,
+    buildAlwaysCoop: 10, 
+    buildAlwaysDefect: 10, 
+    buildRandom: 10,
+    buildTitForTat: 10,
+    buildSuspiciousTitForTat: 10,
+    buildTFTT: 10,
+    buildTTFT: 10,
+    buildGrim: 10,
+    buildProber: 10,
+    buildSoftMajority: 10,
+    buildHardMajority: 10,
+    buildHandShake: 10,
     buildMaster: 1,
-    buildSlave: 15,
-    buildPavlov: 5,
-    buildAdaptiveTFT: 5,
-    buildQLearner: 5
+    buildSlave: 19,
+    buildPavlov: 10,
+    buildAdaptiveTFT: 10,
+    buildQLearner: 1
 }
 
 

@@ -1,6 +1,7 @@
 from agent import Agent
 import numpy as np
 import random
+import math
 
 
 class QLearner(Agent):
@@ -8,27 +9,16 @@ class QLearner(Agent):
         super().__init__(agent_id, strategy)
         self.seen = {}
 
-        self.rounds_size = 2
+        self.rounds_size = 3
 
         self.state = {}
         self.q_values = {}
     
         # constants
-        self.learning_rate = 0.
+        self.learning_rate = 0.9
         self.discount_rate = 0.9
-        self.epsilon       = 0.1
-
-        # epsilon
-        # self.epsilon       = {}
-        # self.epsilon_init  = 0.9
-        # self.epsilon_decay = 0.99
-        # self.epsilon_min   = 0.1
-
-    def normalise_reward(self, reward):
-        mean = np.mean((0, 1, 3, 5))
-        std  = np.std((0, 1, 3, 5))
-        return (reward - mean) / std
-
+        self.epsilon_decay = 0.5
+    
     def calculate_state(self, self_choice, opponent_choice):
         return 2 * self_choice + opponent_choice
 
@@ -36,6 +26,10 @@ class QLearner(Agent):
         state = self.state[agent_id]
         return int(np.dot(np.power(4, np.arange(self.rounds_size)), state))
         
+    def epsilon(self, agent_id):
+        number_sa = 4 ** self.rounds_size * 2
+        fraction = self.seen[agent_id] / number_sa
+        return (1 - math.tanh(self.epsilon_decay * fraction))
 
     def new_agent(self, agent_id):
         self.seen[agent_id] = 0
@@ -46,16 +40,12 @@ class QLearner(Agent):
         # initialise new state
         self.state[agent_id]    = np.zeros(self.rounds_size)
 
-        # initialise new epsilon
-        # self.epsilon[agent_id] = self.epsilon_init
-    
-
     def play(self, agent_id):
         if agent_id not in self.seen:
             self.new_agent(agent_id)
 
         # if random.random() > self.epsilon[agent_id]:
-        if self.seen[agent_id] < 4 or random.random() > self.epsilon:
+        if self.seen[agent_id] < 4 or random.random() > self.epsilon(agent_id):
             # exploitation
             state = self.get_state(agent_id)
             result = np.argmax(self.q_values[agent_id][state])
@@ -78,11 +68,12 @@ class QLearner(Agent):
         self.state[agent_id][:self.rounds_size - 1] = self.state[agent_id][1:]
         self.state[agent_id][self.rounds_size - 1]  = self.calculate_state(self_choice, opponent_choice)
 
+        q_table = self.q_values[agent_id]
+
         # get new state
         new_state = self.get_state(agent_id)
-
-        if self.seen[agent_id] >= 4:
-            self.q_values[agent_id][old_state, self_choice] = self.q_values[agent_id][old_state, self_choice] + self.learning_rate * (
-                self.normalise_reward(points) - self.discount_rate * np.max(self.q_values[agent_id][new_state]) - self.q_values[agent_id][old_state,self_choice]
-            )
-        
+        if self.seen[agent_id] > self.rounds_size:
+            r = points
+            max_q = np.max(q_table[new_state])
+            temporal_difference = r + self.discount_rate * max_q - q_table[old_state, self_choice]
+            q_table[old_state, self_choice] += self.learning_rate * temporal_difference
