@@ -96,9 +96,6 @@ class Game:
 
         return result
 
-    def result():
-        pass
-
     def one_iteration(self):
         agents_copy = self.agents.copy()
         random.shuffle(agents_copy)

@@ -1,26 +1,5 @@
 from game import Game
-from factories import *
-
-
-STRATEGIES = {
-    buildAlwaysCoop: 10, 
-    buildAlwaysDefect: 10, 
-    buildRandom: 10,
-    buildTitForTat: 10,
-    buildSuspiciousTitForTat: 10,
-    buildTFTT: 10,
-    buildTTFT: 10,
-    buildGrim: 10,
-    buildProber: 10,
-    buildSoftMajority: 10,
-    buildHardMajority: 10,
-    buildHandShake: 10,
-    buildMaster: 1,
-    buildSlave: 19,
-    buildPavlov: 10,
-    buildAdaptiveTFT: 10,
-    buildQLearner: 1
-}
+from settings import *
 
 
 def display_agent_info(agent):
@@ -42,12 +21,12 @@ def display_top_n(top_n):
 
 def main():
     game = Game(
-        iterations=100000
+        iterations=ITERATIONS
     )
 
-    game.setup(STRATEGIES)
+    game.setup(strategies_count)
     game.run()
-    top = game.top_n_agents(10)
+    top = game.top_n_agents(DISPLAY_TOP_AGENTS)
     print("=" * 100)
     display_top_n(top)
     print("=" * 100)
