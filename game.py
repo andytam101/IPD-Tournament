@@ -14,6 +14,18 @@ class Game:
 
         self.iterations = iterations
 
+    def display_game_info(self):
+        print(f"Playing {self.iterations} rounds with the current strategies...")
+        strategy_count = {}
+        for a in self.agents:
+            if a.strategy in strategy_count:
+                strategy_count[a.strategy] += 1
+            else:
+                strategy_count[a.strategy] = 1
+
+        for idx, s in enumerate(strategy_count):
+            print(f"{idx + 1}. {s}: {strategy_count[s]}")
+
     def setup(self, factories):
         agent_id = 0
         for f in factories:

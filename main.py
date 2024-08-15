@@ -23,8 +23,9 @@ def main():
     game = Game(
         iterations=ITERATIONS
     )
-
     game.setup(strategies_count)
+    game.display_game_info()
+    print("=" * 100)
     game.run()
     top = game.top_n_agents(DISPLAY_TOP_AGENTS)
     print("=" * 100)
