@@ -1,5 +1,6 @@
 import random
 from agent import Agent
+from tqdm import tqdm
 
 
 class Game:
@@ -138,8 +139,7 @@ class Game:
         self.info[p2.id][1] += 1
 
     def run(self):
-        for i in range(self.iterations):
+        for i in tqdm(range(self.iterations), desc="Running"):
             self.one_iteration()
-            if self.iterations > 10 and (i + 1) % min((self.iterations // 10), 10000) == 0:
-                print(f"iteration {i + 1} complete")
+            
 
