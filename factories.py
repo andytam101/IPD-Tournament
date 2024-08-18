@@ -15,6 +15,7 @@ from agents.slave import Slave
 from agents.pavlov import Pavlov
 from agents.adaptive_tft import AdaptiveTFT
 from agents.reverse_tft import ReverseTFT
+from agents.forgiving_tft import ForgivingTFT
 from agents.q_learner import QLearner
 
 
@@ -84,6 +85,10 @@ def buildAdaptiveTFT(agent_id):
 
 def buildReverseTFT(agent_id):
     return ReverseTFT(agent_id, "Reverse TFT")
+
+
+def buildForgivingTFT(agent_id):
+    return ForgivingTFT(agent_id, "Forgiving TFT")
 
 
 def buildQLearner(agent_id):
