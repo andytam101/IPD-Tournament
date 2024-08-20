@@ -4,7 +4,7 @@ from tqdm import tqdm
 
 
 class Game:
-    def __init__(self, iterations=1000):
+    def __init__(self):
         self.agents = []
 
         # Both cooperate = 3
@@ -13,10 +13,9 @@ class Game:
         self.payoff = [[3, 0], [5, 1]]
         self.info = {}
 
-        self.iterations = iterations
+        self.total_iterations = 0
 
-    def display_game_info(self):
-        print(f"Playing {self.iterations} rounds with the current strategies...")
+    def display_strategy_info(self):
         strategy_count = {}
         for a in self.agents:
             if a.strategy in strategy_count:
@@ -138,8 +137,11 @@ class Game:
         self.info[p2.id][0] += p2_reward
         self.info[p2.id][1] += 1
 
-    def run(self):
-        for i in tqdm(range(self.iterations), desc="Running"):
+    def run(self, iterations):
+        print(f"Playing {iterations} rounds with the current strategies...")
+        self.display_strategy_info()
+        print("=" * 100)
+        for _ in tqdm(range(iterations), desc="Running"):
             self.one_iteration()
-            
-
+        
+        self.total_iterations += iterations

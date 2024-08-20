@@ -1,5 +1,29 @@
 from game import Game
 from settings import *
+import pickle
+import os
+import argparse
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-i", "--iteration", required=True, type=int)
+    parser.add_argument("-l", "--load")
+    parser.add_argument("-s", "--save")
+
+    return parser.parse_args()
+
+
+def load_game(path):
+    with open(path, "rb") as f:
+        game = pickle.load(f)
+    return game
+
+
+def save_game(game_obj, path):
+    with open(path, "wb") as f:
+        pickle.dump(game_obj, f, pickle.HIGHEST_PROTOCOL)
 
 
 def display_agent_info(agent):
@@ -20,19 +44,33 @@ def display_top_n(top_n):
         
 
 def main():
-    game = Game(
-        iterations=ITERATIONS
-    )
-    game.setup(strategies_count)
-    game.display_game_info()
+    args = get_arguments()
+
+    if args.load is None:
+        print("Starting new game...")
+        game = Game()
+        game.setup(strategies_count)
+    else:
+        try:
+            with open(os.path.join(SAVED_GAMES, args.load), "rb") as f:
+                game: Game = pickle.load(f)
+            print(f"Loading game from: {os.path.join(SAVED_GAMES, args.load)}, which has ran for {game.total_iterations} total iterations")
+        except FileNotFoundError:
+            print("Input file not found")
+            return
+ 
     print("=" * 100)
-    game.run()
+    game.run(args.iteration)
     top = game.top_n_agents(DISPLAY_TOP_AGENTS)
     print("=" * 100)
     display_top_n(top)
     print("=" * 100)
     strategies = game.strategies_ranking()
     display_strategy_ranking(strategies)
+    if args.save is not None:
+        print("=" * 100)
+        print(f"Now saving game file to: {os.path.join(SAVED_GAMES, args.save)}")
+        save_game(game, os.path.join(SAVED_GAMES, args.save))
 
 
 if __name__ == "__main__":
