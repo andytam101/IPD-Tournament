@@ -13,4 +13,3 @@ class Agent(ABC):
     @abstractmethod
     def result(self, agent_id, self_choice, opponent_choice, points):
         """Receives the outcome"""
-

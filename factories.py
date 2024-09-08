@@ -93,3 +93,26 @@ def buildForgivingTFT(agent_id):
 
 def buildQLearner(agent_id):
     return QLearner(agent_id, "Q-Learner")
+
+
+factories_mapping = {
+    "ALCP": buildAlwaysCoop,
+    "ALDF": buildAlwaysDefect,
+    "RAND": buildRandom,
+    "TFT": buildTitForTat,
+    "TF2T": buildTFTT,
+    "2TFT": buildTTFT,
+    "RTFT": buildReverseTFT,
+    "GRIM": buildGrim,
+    "PAVL": buildPavlov,
+    "PROB": buildProber,
+    "STFT": buildSuspiciousTitForTat,
+    "FTFT": buildForgivingTFT,
+    "ATFT": buildAdaptiveTFT,
+    "HAND": buildHandShake,
+    "SMAJ": buildSoftMajority,
+    "HMAJ": buildHardMajority,
+    "MSTR": buildMaster,
+    "SLVE": buildSlave,
+    "QLRN": buildQLearner,
+}

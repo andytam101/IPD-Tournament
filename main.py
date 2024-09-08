@@ -1,8 +1,25 @@
 from game import Game
 from settings import *
+from factories import factories_mapping
 import pickle
 import os
 import argparse
+import json
+
+
+def get_factories(path):
+    if path is None:
+        return default_strategies_count
+
+    # read json file
+    f = open(path, "r")
+    data = json.load(f)
+    f.close()
+
+    result = {}
+    for s in data:
+        result[factories_mapping[s]] = data[s]
+    return result
 
 
 def get_arguments():
@@ -11,6 +28,7 @@ def get_arguments():
     parser.add_argument("-i", "--iteration", required=True, type=int)
     parser.add_argument("-l", "--load")
     parser.add_argument("-s", "--save")
+    parser.add_argument("-a", "--agents")
 
     return parser.parse_args()
 
@@ -49,12 +67,16 @@ def main():
     if args.load is None:
         print("Starting new game...")
         game = Game()
-        game.setup(strategies_count)
+        game.setup(get_factories(args.agents))
     else:
         try:
             with open(os.path.join(SAVED_GAMES, args.load), "rb") as f:
                 game: Game = pickle.load(f)
             print(f"Loading game from: {os.path.join(SAVED_GAMES, args.load)}, which has ran for {game.total_iterations} total iterations")
+            if args.agents is not None:
+                new_agents = get_factories(args.agents)
+                game.setup(new_agents)
+
         except FileNotFoundError:
             print("Input file not found")
             return

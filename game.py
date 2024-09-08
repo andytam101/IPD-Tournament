@@ -27,7 +27,7 @@ class Game:
             print(f"{idx + 1}. {s}: {strategy_count[s]}")
 
     def setup(self, factories):
-        agent_id = 0
+        agent_id = len(self.agents)
         for f in factories:
             for _ in range(factories[f]):
                 self.agents.append(f(agent_id))
